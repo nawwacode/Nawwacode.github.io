@@ -1072,7 +1072,7 @@ html[lang="ar"] h6 {
 
 /* ===== Desktop Background Soft Blur ===== */
 @media (min-width: 769px) {
-  :root { --dynamic-bg: url("https://i.postimg.cc/ryGnWmkN/IMG-1798.jpg"); }
+  :root { --dynamic-bg: url("https://i.postimg.cc/G2r48rGc/CB64B4D7-2B29-4ADA-BF0B-B3128037AE2D.jpg"); }
 }
 
 
@@ -1088,7 +1088,7 @@ body::before {
 
 /* ===== Desktop: Keep Hero Background Static ===== */
 @media (min-width: 769px) {
-  :root { --dynamic-bg: url("https://i.postimg.cc/ryGnWmkN/IMG-1798.jpg"); }
+  :root { --dynamic-bg: url("https://i.postimg.cc/G2r48rGc/CB64B4D7-2B29-4ADA-BF0B-B3128037AE2D.jpg"); }
 }
 
   /* keep body::before behavior mobile-friendly */
@@ -1468,7 +1468,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!isDesktop) {
     const hero = document.querySelector('#hero');
     if (hero && hero.dataset && hero.dataset.bg) {
-      root.style.setProperty('--dynamic-bg', `url('https://i.postimg.cc/ryGnWmkN/IMG-1798.jpg')`);
+      root.style.setProperty('--dynamic-bg', `url('https://i.postimg.cc/G2r48rGc/CB64B4D7-2B29-4ADA-BF0B-B3128037AE2D.jpg')`);
     } else if (sections[0] && sections[0].dataset.bg) {
       root.style.setProperty('--dynamic-bg', `url('${sections[0].dataset.bg}')`);
     }
