@@ -1,0 +1,1665 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+<title>NawwaCode - Digital Agency</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  color: #ffffff;
+  overflow-x: hidden;
+  background-color: #000000;
+  
+  /* Scroll Snap Container */
+  scroll-snap-type: y mandatory;
+  height: 100vh;
+  overflow-y: scroll;
+  
+  /* Smooth transition for language change */
+  transition: all 0.4s ease;
+}
+
+/* ============================================
+   BACKGROUND IMAGE - FIXED LAYER
+   ============================================ */
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: var(--dynamic-bg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  z-index: -2;
+  pointer-events: none;
+}
+
+/* ============================================
+   LANGUAGE TOGGLE SWITCH - iOS STYLE
+   ============================================ */
+
+.language-switch {
+  position: fixed;
+  top: 25px;
+  left: 25px;
+  z-index: 1000;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+  overflow: hidden;
+}
+
+.language-switch:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 30px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+}
+
+.language-switch:active {
+  transform: translateY(0);
+}
+
+/* Switch Container */
+.switch-container {
+  position: relative;
+  width: 60px;
+  height: 30px;
+  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Switch Track */
+.switch-track {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+}
+
+/* Language Labels */
+.language-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.4);
+  transition: all 0.3s ease;
+  z-index: 2;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.language-label.active {
+  color: #ffffff;
+}
+
+/* Switch Thumb */
+.switch-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #ffffff;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 3;
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Language Icon */
+.language-icon {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* SVG Icon Styling */
+.icon-svg {
+  width: 100%;
+  height: 100%;
+  opacity: 0.9;
+}
+
+/* AR Position - حركة الزر عند التبديل للعربية */
+body.rtl .switch-thumb {
+  left: calc(100% - 27px);
+}
+
+/* ============================================
+   SECTION DIVIDER - WHITE GRADIENT DIVIDER
+   ============================================ */
+
+.section-divider {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0));
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* ============================================
+   SECTION STYLES
+   ============================================ */
+
+section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  z-index: 1;
+  overflow: hidden;
+  animation: slideInFromRight 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+#hero {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+#about,
+#services,
+#certifications,
+#team,
+#contact {
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.section-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.section-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.section-content {
+  max-width: 1000px;
+  width: 100%;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.hero-content {
+  text-align: center;
+}
+
+.hero-title {
+  font-size: clamp(36px, 8vw, 72px);
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 20px;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+  letter-spacing: -1px;
+}
+
+.hero-subtitle {
+  font-size: clamp(16px, 4vw, 24px);
+  font-weight: 300;
+  margin-bottom: 50px;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+.buttons-container {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+.btn {
+  padding: 16px 40px;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-primary {
+  background: #ffffff;
+  color: #000000;
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.25);
+  position: relative;
+  animation: glowPulse 2s ease-in-out infinite;
+}
+
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%);
+  border-radius: 50px;
+  z-index: -1;
+  animation: glowPulse 2s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow: 0 8px 24px rgba(255, 255, 255, 0.25), 0 0 20px rgba(255, 255, 255, 0.4);
+  }
+  50% {
+    box-shadow: 0 8px 24px rgba(255, 255, 255, 0.35), 0 0 40px rgba(255, 255, 255, 0.6);
+  }
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.btn:hover {
+  transform: translateY(-6px);
+}
+
+.btn-primary:hover {
+  background: #f0f0f0;
+  box-shadow: 0 16px 32px rgba(255, 255, 255, 0.4), 0 0 50px rgba(255, 255, 255, 0.7);
+  animation: glowPulse 1.5s ease-in-out infinite;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4);
+}
+
+.btn:active {
+  transform: translateY(-2px);
+}
+
+.section-title {
+  font-size: clamp(32px, 6vw, 56px);
+  font-weight: 800;
+  margin-bottom: 25px;
+  text-align: center;
+  letter-spacing: -1px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.section-description {
+  font-size: 18px;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.92);
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.about-item {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 30px;
+  transition: all 0.3s ease;
+}
+
+.about-item:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-4px);
+}
+
+.about-item-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.about-item-text {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.6;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  margin-top: 40px;
+}
+
+.service-card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 35px 25px;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.service-card:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+}
+
+.service-icon {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto 15px;
+  opacity: 0.95;
+}
+
+.service-name {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.service-description {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+}
+
+.certifications-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.cert-item {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: 25px 20px;
+  transition: all 0.3s ease;
+  text-align: left;
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.cert-item:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateX(4px);
+}
+
+.cert-icon {
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  margin-top: 2px;
+  opacity: 0.9;
+}
+
+.cert-text {
+  font-size: 15px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 40px;
+  margin-top: 40px;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.team-member {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  padding: 30px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.team-member:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-8px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4);
+}
+
+.team-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 25px;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.team-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.team-member:hover .team-image img {
+  transform: scale(1.05);
+}
+
+.team-name {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #ffffff;
+}
+
+.team-role {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 15px;
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.1);
+  padding: 6px 15px;
+  border-radius: 50px;
+  display: inline-block;
+}
+
+.team-description {
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.contact-info {
+  margin: 40px 0;
+  text-align: center;
+}
+
+.contact-email {
+  font-size: 24px;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 30px 0;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.contact-email:hover {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.social-links {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.social-btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.social-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-4px);
+}
+
+.social-icon {
+  width: 24px;
+  height: 24px;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ============================================
+   RTL SUPPORT FOR ARABIC
+   ============================================ */
+
+body.rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+body.rtl .section-description,
+body.rtl .about-item-text,
+body.rtl .service-description,
+body.rtl .cert-text,
+body.rtl .team-description {
+  text-align: right;
+}
+
+body.rtl .cert-item {
+  text-align: right;
+}
+
+body.rtl .cert-item {
+  flex-direction: row-reverse;
+}
+
+body.rtl .language-switch {
+  left: auto;
+  right: 25px;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN
+   ============================================ */
+
+@media (max-width: 768px) {
+  body {
+    height: auto;
+    overflow-y: auto;
+  }
+
+  section {
+    height: auto;
+    min-height: 100vh;
+    padding: 40px 15px;
+    scroll-snap-align: start;
+  }
+
+  .section-wrapper {
+    padding: 40px 15px;
+    height: auto;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .text-language-toggle {
+    top: 20px;
+    left: 20px;
+  }
+  
+  body.rtl .text-language-toggle {
+    left: auto;
+    right: 20px;
+  }
+
+  .language-switch {
+    top: 20px;
+    left: 20px;
+    padding: 8px;
+  }
+  
+  body.rtl .language-switch {
+    left: auto;
+    right: 20px;
+  }
+  
+  .switch-container {
+    width: 55px;
+    height: 28px;
+  }
+  
+  .switch-thumb {
+    width: 22px;
+    height: 22px;
+    top: 2px;
+    left: 2px;
+  }
+  
+  body.rtl .switch-thumb {
+    left: calc(100% - 24px);
+  }
+
+  .hero-title {
+    font-size: clamp(28px, 7vw, 48px);
+  }
+
+  .hero-subtitle {
+    font-size: clamp(14px, 3.5vw, 18px);
+    margin-bottom: 30px;
+  }
+
+  .buttons-container {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .btn {
+    width: 100%;
+    max-width: 300px;
+    padding: 14px 30px;
+    font-size: 15px;
+  }
+
+  .section-title {
+    font-size: clamp(28px, 5vw, 40px);
+  }
+
+  .section-description {
+    font-size: 16px;
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .service-card {
+    padding: 25px 20px;
+  }
+
+  .certifications-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .team-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    max-width: 500px;
+  }
+  
+  .team-member {
+    padding: 25px 20px;
+  }
+  
+  .team-image {
+    width: 130px;
+    height: 130px;
+  }
+  
+  .team-name {
+    font-size: 20px;
+  }
+  
+  .team-role {
+    font-size: 15px;
+  }
+  
+  .team-description {
+    font-size: 14px;
+  }
+
+  .contact-email {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  section {
+    padding: 30px 15px;
+  }
+
+  .section-wrapper {
+    padding: 30px 15px;
+  }
+  
+  .text-language-toggle {
+    top: 15px;
+    left: 15px;
+  }
+  
+  body.rtl .text-language-toggle {
+    left: auto;
+    right: 15px;
+  }
+  
+  .language-switch {
+    top: 15px;
+    left: 15px;
+    padding: 6px;
+  }
+  
+  body.rtl .language-switch {
+    left: auto;
+    right: 15px;
+  }
+  
+  .switch-container {
+    width: 50px;
+    height: 26px;
+  }
+  
+  .switch-thumb {
+    width: 20px;
+    height: 20px;
+  }
+  
+  body.rtl .switch-thumb {
+    left: calc(100% - 22px);
+  }
+
+  .hero-title {
+    font-size: 26px;
+    margin-bottom: 15px;
+  }
+
+  .hero-subtitle {
+    font-size: 14px;
+    margin-bottom: 25px;
+  }
+
+  .btn {
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+
+  .section-title {
+    font-size: 24px;
+  }
+
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .about-item {
+    padding: 20px;
+  }
+
+  .service-card {
+    padding: 20px 15px;
+  }
+
+  .cert-item {
+    padding: 20px 15px;
+  }
+
+  .team-grid {
+    gap: 25px;
+  }
+  
+  .team-member {
+    padding: 20px 15px;
+  }
+  
+  .team-image {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 20px;
+  }
+  
+  .team-name {
+    font-size: 18px;
+  }
+  
+  .team-description {
+    font-size: 13px;
+  }
+
+  .social-links {
+    gap: 15px;
+  }
+
+  .social-btn {
+    width: 45px;
+    height: 45px;
+  }
+
+  .social-icon {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* Accessibility */
+.btn:focus,
+.social-btn:focus,
+a:focus,
+.language-switch:focus {
+  outline: 3px solid rgba(255, 255, 255, 0.6);
+  outline-offset: 3px;
+}
+
+/* Fallback for browsers without backdrop-filter */
+@supports not (backdrop-filter: blur(10px)) {
+  section:not(#hero) {
+    background: rgba(0, 0, 0, 0.65);
+  }
+
+  .about-item,
+  .service-card,
+  .cert-item,
+  .team-member,
+  .social-btn,
+  .language-switch {
+    background: rgba(0, 0, 0, 0.6);
+  }
+
+  .switch-container {
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  .btn-secondary {
+    background: rgba(0, 0, 0, 0.5);
+  }
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
+
+.text-language-toggle {
+  position: fixed;
+  top: 25px;
+  left: 25px;
+  z-index: 1000;
+  font-size: 14px;
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 10px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.15);
+}
+
+.lang-item {
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.25s ease;
+}
+
+.lang-item.active {
+  opacity: 1;
+  font-weight: 600;
+}
+
+.lang-sep {
+  margin: 0 6px;
+  opacity: 0.4;
+}
+
+body.ltr {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+}
+
+body.rtl {
+  font-family: 'Cairo', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+}
+
+body.rtl .text-language-toggle {
+  left: auto;
+  right: 25px;
+}
+
+
+/* === Arabic Font: Cairo (forced) === */
+html[lang="ar"] body {
+  font-family: 'Cairo', sans-serif !important;
+  font-weight: 400;
+}
+
+html[lang="ar"] h1,
+html[lang="ar"] h2,
+html[lang="ar"] h3,
+html[lang="ar"] h4,
+html[lang="ar"] h5,
+html[lang="ar"] h6 {
+  font-family: 'Cairo', sans-serif !important;
+  font-weight: 700;
+}
+
+
+/* ===== Mobile-only Background Image ===== */
+@media (max-width: 768px) {
+  body::before {
+    background-image: var(--dynamic-bg);
+    background-attachment: scroll;
+    background-position: center;
+    background-size: cover;
+  }
+}
+
+
+/* ===== Mobile Hero Alignment Fix (Arabic) ===== */
+@media (max-width: 768px) {
+  #hero .hero-content {
+    text-align: center;
+    align-items: center;
+  }
+
+  #hero .hero-title,
+  #hero .hero-subtitle {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+
+  #hero .buttons-container {
+    justify-content: center;
+    align-items: center;
+  }
+
+  body.rtl #hero .buttons-container {
+    flex-direction: column;
+  }
+}
+
+
+/* ===== Mobile Background Soft Blur ===== */
+@media (max-width: 768px) {
+  body::before {
+    filter: blur(6px) saturate(1.1);
+    transform: scale(1.05);
+  }
+}
+
+
+/* ===== Desktop Background Soft Blur ===== */
+@media (min-width: 769px) {
+  :root { --dynamic-bg: url("https://i.postimg.cc/ryGnWmkN/IMG-1798.jpg"); }
+}
+
+
+/* ===== Background Fade Transition ===== */
+body::before {
+  transition: background-image 0.8s ease, opacity 0.8s ease;
+}
+
+.bg-fade::before {
+  opacity: 0;
+}
+
+
+/* ===== Desktop: Keep Hero Background Static ===== */
+@media (min-width: 769px) {
+  :root { --dynamic-bg: url("https://i.postimg.cc/ryGnWmkN/IMG-1798.jpg"); }
+}
+
+  /* keep body::before behavior mobile-friendly */
+  body::before {
+    background-attachment: scroll !important;
+    background-position: center !important;
+    background-size: cover !important;
+  }
+}
+
+
+/* === Buttons size & inline layout fix (mobile + desktop) === */
+.buttons-container {
+  flex-direction: row !important;
+  gap: 12px;
+}
+
+.btn {
+  padding: 10px 22px !important;
+  font-size: 14px !important;
+  min-width: auto !important;
+  width: auto !important;
+}
+
+@media (max-width: 768px) {
+  .buttons-container {
+    flex-direction: row !important;
+    justify-content: center;
+  }
+}
+
+/* ============================================
+   SWIPE NAVIGATION STYLES
+   ============================================ */
+
+body {
+  touch-action: pan-y;
+}
+
+section {
+  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Swipe down animation */
+section.swipe-down {
+  animation: swipeDown 0.5s ease-out;
+}
+
+/* Swipe up animation */
+section.swipe-up {
+  animation: swipeUp 0.5s ease-out;
+}
+
+@keyframes swipeDown {
+  from {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes swipeUp {
+  from {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* === Footer hard reset === */
+footer {
+  background: #000 !important;
+  background-image: none !important;
+}
+
+</style>
+
+<script>
+window.scrollToSection = function (id) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+};
+</script>
+
+
+
+
+</head>
+
+<body>
+
+<div id="textLanguageToggle" class="text-language-toggle">
+  <span id="langEn" class="lang-item active">English</span>
+  <span class="lang-sep">/</span>
+  <span id="langAr" class="lang-item" style="font-family: 'Cairo', sans-serif;">العربية</span>
+</div>
+
+<!-- باقي المحتوى -->
+<section id="hero" data-bg="https://i.postimg.cc/J0FkfZXK/IMG_1789.jpg">
+  <div class="section-wrapper">
+    <div class="section-content hero-content">
+      <h1 class="hero-title" data-en="Welcome to NawwaCode" data-ar="مرحباً بكم في NawwaCode">Welcome to NawwaCode</h1>
+      <p class="hero-subtitle" data-en="Where ideas turn into digital experiences" data-ar="حيث تتحول الأفكار إلى تجارب رقمية">Where ideas turn into digital experiences</p>
+      <div class="buttons-container">
+        <button class="btn btn-primary" onclick="scrollToSection('contact')" data-en="Get Started" data-ar="ابدأ الآن">Get Started</button>
+        <button class="btn btn-secondary" onclick="scrollToSection('about')" data-en="Learn More" data-ar="اعرف المزيد">Learn More</button>
+      </div>
+    </div>
+  </div>
+  <div class="section-divider"></div>
+</section>
+
+<section id="about" data-bg="https://i.postimg.cc/tRvWnQcj/IMG_1785.jpg">
+  <div class="section-wrapper">
+    <div class="section-content">
+      <h2 class="section-title" data-en="About NawwaCode" data-ar="عن NawwaCode">About NawwaCode</h2>
+      <p class="section-description" data-en="NawwaCode is a creative digital team specialized in website design and development, with strong expertise in booking and reservation systems. We build clean, modern, and scalable digital experiences for startups and businesses." data-ar="NawwaCode هو فريق رقمي إبداعي متخصص في تصميم وتطوير المواقع الإلكترونية، مع خبرة قوية في أنظمة الحجز والمواعيد. نحن نبني تجارب رقمية نظيفة وعصرية وقابلة للتوسع للشركات الناشئة والشركات.">
+        NawwaCode is a creative digital team specialized in website design and development, with strong expertise in booking and reservation systems. We build clean, modern, and scalable digital experiences for startups and businesses.
+      </p>
+      <div class="about-grid">
+        <div class="about-item">
+          <div class="about-item-title" data-en="Clean Code" data-ar="كود نظيف">Clean Code</div>
+          <div class="about-item-text" data-en="We write maintainable, efficient, and professional code that stands the test of time." data-ar="نكتب كوداً يمكن صيانته، وفعالاً، واحترافياً ليدوم عبر الزمن.">We write maintainable, efficient, and professional code that stands the test of time.</div>
+        </div>
+        <div class="about-item">
+          <div class="about-item-title" data-en="Modern UI/UX" data-ar="واجهات مستخدم حديثة">Modern UI/UX</div>
+          <div class="about-item-text" data-en="Beautiful, intuitive interfaces designed with user experience at the forefront." data-ar="واجهات جميلة وبديهية مصممة مع تجربة المستخدم في المقدمة.">Beautiful, intuitive interfaces designed with user experience at the forefront.</div>
+        </div>
+        <div class="about-item">
+          <div class="about-item-title" data-en="Performance" data-ar="الأداء">Performance</div>
+          <div class="about-item-text" data-en="Lightning-fast websites optimized for speed, scalability, and search engines." data-ar="مواقع إلكترونية سريعة جداً محسنة للسرعة والقابلية للتوسع ومحركات البحث.">Lightning-fast websites optimized for speed, scalability, and search engines.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section-divider"></div>
+</section>
+
+<section id="services" data-bg="https://i.postimg.cc/Fz6LM3SC/IMG_1784.jpg">
+  <div class="section-wrapper">
+    <div class="section-content">
+      <h2 class="section-title" data-en="Our Services" data-ar="خدماتنا">Our Services</h2>
+      <p class="section-description" data-en="Comprehensive digital solutions tailored to your business needs" data-ar="حلول رقمية شاملة مصممة خصيصاً لاحتياجات عملك">
+        Comprehensive digital solutions tailored to your business needs
+      </p>
+      <div class="services-grid">
+        <div class="service-card">
+          <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7L2 17C2 20.866 7.373 23 12 23C16.627 23 22 20.866 22 17V7L12 2Z"/>
+            <path d="M12 23V12.5"/>
+            <path d="M2 7L12 12.5L22 7"/>
+          </svg>
+          <div class="service-name" data-en="Website Design & Development" data-ar="تصميم وتطوير المواقع الإلكترونية">Website Design & Development</div>
+          <div class="service-description" data-en="Custom websites built from scratch with modern design principles and best practices." data-ar="مواقع إلكترونية مخصصة تُبنى من الصفر باستخدام مبادئ التصميم الحديثة وأفضل الممارسات.">Custom websites built from scratch with modern design principles and best practices.</div>
+        </div>
+
+        <div class="service-card">
+          <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+            <circle cx="9" cy="16" r="1"/>
+            <circle cx="15" cy="16" r="1"/>
+          </svg>
+          <div class="service-name" data-en="Booking & Reservation Systems" data-ar="أنظمة الحجز والمواعيد">Booking & Reservation Systems</div>
+          <div class="service-description" data-en="Powerful booking platforms tailored for your business with seamless user experience." data-ar="منصات حجز قوية مصممة خصيصاً لعملك مع تجربة مستخدم سلسة.">Powerful booking platforms tailored for your business with seamless user experience.</div>
+        </div>
+
+        <div class="service-card">
+          <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="1"/>
+            <circle cx="19" cy="12" r="1"/>
+            <circle cx="5" cy="12" r="1"/>
+            <path d="M12 5V2M12 22V19M19 5L17.66 3.66M6.34 20.34L5 19M19 19L17.66 20.34M6.34 3.66L5 5"/>
+          </svg>
+          <div class="service-name" data-en="Custom Web Platforms" data-ar="منصات ويب مخصصة">Custom Web Platforms</div>
+          <div class="service-description" data-en="Advanced solutions for complex business requirements and unique challenges." data-ar="حلول متقدمة لمتطلبات الأعمال المعقدة والتحديات الفريدة.">Advanced solutions for complex business requirements and unique challenges.</div>
+        </div>
+
+        <div class="service-card">
+          <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+            <path d="M12 6v6l4 2.4"/>
+          </svg>
+          <div class="service-name" data-en="UI/UX Design" data-ar="تصميم واجهة المستخدم وتجربته">UI/UX Design</div>
+          <div class="service-description" data-en="Strategic design that combines aesthetics with functionality for optimal user engagement." data-ar="تصميم استراتيجي يجمع بين الجماليات والوظائف لتحقيق أفضل مشاركة للمستخدم.">Strategic design that combines aesthetics with functionality for optimal user engagement.</div>
+        </div>
+
+        <div class="service-card">
+          <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="16 18 22 12 16 6"/>
+            <polyline points="8 6 2 12 8 18"/>
+          </svg>
+          <div class="service-name" data-en="Front-End & Full Stack Development" data-ar="تطوير الواجهة الأمامية والكاملة">Front-End & Full Stack Development</div>
+          <div class="service-description" data-en="End-to-end development solutions using cutting-edge technologies and frameworks." data-ar="حلول تطوير شاملة باستخدام أحدث التقنيات والأطر.">End-to-end development solutions using cutting-edge technologies and frameworks.</div>
+        </div>
+
+        <div class="service-card">
+          <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/>
+            <polyline points="13 2 13 9 20 9"/>
+            <line x1="12" y1="13" x2="12" y2="19"/>
+            <line x1="9" y1="16" x2="15" y2="16"/>
+          </svg>
+          <div class="service-name" data-en="Performance Optimization" data-ar="تحسين الأداء">Performance Optimization</div>
+          <div class="service-description" data-en="Speed and efficiency improvements that enhance user experience and SEO rankings." data-ar="تحسينات السرعة والكفاءة التي تعزز تجربة المستخدم وترتيب SEO.">Speed and efficiency improvements that enhance user experience and SEO rankings.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section-divider"></div>
+</section>
+
+<section id="certifications" data-bg="https://i.postimg.cc/c1f60qSW/IMG-1787.jpg">
+  <div class="section-wrapper">
+    <div class="section-content">
+      <h2 class="section-title" data-en="Professional Certifications" data-ar="الشهادات الاحترافية">Professional Certifications</h2>
+      <p class="section-description" data-en="Industry-recognized credentials demonstrating our expertise and commitment to excellence" data-ar="اعتمادات معترف بها في الصناعة تظهر خبرتنا والتزامنا بالتميز">
+        Industry-recognized credentials demonstrating our expertise and commitment to excellence
+      </p>
+      <div class="certifications-grid">
+        <div class="cert-item">
+          <svg class="cert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <span class="cert-text" data-en="Meta Front-End Developer Professional Certificate" data-ar="شهادة محترف تطوير الواجهة الأمامية من Meta">Meta Front-End Developer Professional Certificate</span>
+        </div>
+        <div class="cert-item">
+          <svg class="cert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <span class="cert-text" data-en="Google UX Design Professional Certificate" data-ar="شهادة محترف تصميم تجربة المستخدم من Google">Google UX Design Professional Certificate</span>
+        </div>
+        <div class="cert-item">
+          <svg class="cert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <span class="cert-text" data-en="IBM Full Stack Software Developer Professional Certificate" data-ar="شهادة محترف تطوير البرمجيات الكاملة من IBM">IBM Full Stack Software Developer Professional Certificate</span>
+        </div>
+        <div class="cert-item">
+          <svg class="cert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <span class="cert-text" data-en="Responsive Web Design Certification – freeCodeCamp" data-ar="شهادة تصميم الويب المتجاوب – freeCodeCamp">Responsive Web Design Certification – freeCodeCamp</span>
+        </div>
+        <div class="cert-item">
+          <svg class="cert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <span class="cert-text" data-en="JavaScript Algorithms and Data Structures – freeCodeCamp" data-ar="خوارزميات وهياكل بيانات JavaScript – freeCodeCamp">JavaScript Algorithms and Data Structures – freeCodeCamp</span>
+        </div>
+        <div class="cert-item">
+          <svg class="cert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <span class="cert-text" data-en="AWS Certified Developer – Associate" data-ar="مطور AWS معتمد – مشارك">AWS Certified Developer – Associate</span>
+        </div>
+        <div class="cert-item">
+          <svg class="cert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <span class="cert-text" data-en="Advanced CSS & Modern Layout Techniques" data-ar="تقنيات CSS المتقدمة والتخطيط الحديث">Advanced CSS & Modern Layout Techniques</span>
+        </div>
+        <div class="cert-item">
+          <svg class="cert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <span class="cert-text" data-en="UI/UX Design Systems & Accessibility Standards" data-ar="أنظمة تصميم واجهة المستخدم وتجربته ومعايير الوصول">UI/UX Design Systems & Accessibility Standards</span>
+        </div>
+        <div class="cert-item">
+          <svg class="cert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <span class="cert-text" data-en="API Integration & Backend Connectivity" data-ar="تكامل API والتوصيل بالخلفية">API Integration & Backend Connectivity</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section-divider"></div>
+</section>
+
+<section id="team" data-bg="https://i.postimg.cc/RCYG5H4Y/IMG_1793.jpg">
+  <div class="section-wrapper">
+    <div class="section-content">
+      <h2 class="section-title" data-en="Our Team" data-ar="فريقنا">Our Team</h2>
+      <p class="section-description" data-en="Meet the talented individuals behind NawwaCode, combining technical expertise with creative vision." data-ar="تعرف على الأفراد الموهوبين وراء NawwaCode، يجمعون بين الخبرة التقنية والرؤية الإبداعية.">
+        Meet the talented individuals behind NawwaCode, combining technical expertise with creative vision.
+      </p>
+      <div class="team-grid">
+        <div class="team-member">
+          <div class="team-image">
+            <img src="https://i.postimg.cc/8zkZht0t/IMG_1728.jpg" alt="Ihab abdoulal">
+          </div>
+          <div class="team-info">
+            <div class="team-name" data-en="Ihab abdoulal" data-ar="إيهاب عبد العال">Ihab abdoulal</div>
+            <div class="team-role" data-en="Web Developer & Graphic Designer" data-ar="مطور ويب ومصمم جرافيك">Web Developer & Graphic Designer</div>
+            <div class="team-description" data-en="Freelancer with 3+ years of web development experience and 7+ years in graphic design. Passionate about visual identity and user experience." data-ar="فريلانسر مع خبرة تزيد عن 3 سنوات في تطوير الويب و7 سنوات في التصميم الجرافيكي. شغوف بالهوية البصرية وتجربة المستخدم.">
+              Freelancer with 3+ years of web development experience and 7+ years in graphic design. Passionate about visual identity and user experience.
+            </div>
+          </div>
+        </div>
+
+        <div class="team-member">
+          <div class="team-image">
+            <img src="https://i.postimg.cc/kgMTxfps/IMG_1727.jpg" alt="Abed istampooli">
+          </div>
+          <div class="team-info">
+            <div class="team-name" data-en="Abed istampooli" data-ar="عابد إستامبولي">Abed istampooli</div>
+            <div class="team-role" data-en="Web Developer & Computer Engineering Student" data-ar="مطور ويب وطالب هندسة حاسوب">Web Developer & Computer Engineering Student</div>
+            <div class="team-description" data-en="Computer engineering student with 5+ years of web development experience. Specializes in responsive web design with focus on performance and user experience." data-ar="طالب هندسة حاسوب مع خبرة تزيد عن 5 سنوات في تطوير الويب. متخصص في تصميم الويب المتجاوب مع التركيز على الأداء وتجربة المستخدم.">
+              Computer engineering student with 5+ years of web development experience. Specializes in responsive web design with focus on performance and user experience.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section-divider"></div>
+</section>
+
+<section id="contact" data-bg="https://i.postimg.cc/T2sQMDfQ/IMG_1794.jpg">
+  <div class="section-wrapper">
+    <div class="section-content">
+      <h2 class="section-title" data-en="Get In Touch" data-ar="تواصل معنا">Get In Touch</h2>
+      <p class="section-description" data-en="Ready to bring your digital vision to life? Let's connect and create something amazing together." data-ar="مستعد لتحويل رؤيتك الرقمية إلى واقع؟ دعنا نتصل ونخلق شيئاً مذهلاً معاً.">
+        Ready to bring your digital vision to life? Let's connect and create something amazing together.
+      </p>
+      <div class="contact-info">
+        <p style="font-size: 16px; color: rgba(255, 255, 255, 0.85); margin-bottom: 20px;" data-en="Drop us a line and we'll get back to you as soon as possible." data-ar="اترك لنا رسالة وسنعود إليك في أقرب وقت ممكن.">
+          Drop us a line and we'll get back to you as soon as possible.
+        </p>
+        <a href="mailto:Nawwacode@outlook.com" class="contact-email">Nawwacode@outlook.com</a>
+      </div>
+      <div class="social-links">
+        <a href="https://www.instagram.com/nawwacode" target="_blank" class="social-btn" title="Instagram">
+          <svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <circle cx="12" cy="12" r="3"/>
+            <circle cx="17.5" cy="6.5" r="1.5"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="section-divider"></div>
+</section>
+
+
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const sections = document.querySelectorAll("section[data-bg]");
+  const root = document.documentElement;
+
+  const isDesktop = window.matchMedia('(min-width: 769px)').matches;
+
+  // On mobile: set initial background to hero mobile
+  if (!isDesktop) {
+    const hero = document.querySelector('#hero');
+    if (hero && hero.dataset && hero.dataset.bg) {
+      root.style.setProperty('--dynamic-bg', `url('https://i.postimg.cc/ryGnWmkN/IMG-1798.jpg')`);
+    } else if (sections[0] && sections[0].dataset.bg) {
+      root.style.setProperty('--dynamic-bg', `url('${sections[0].dataset.bg}')`);
+    }
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !isDesktop) {
+        const bg = entry.target.dataset.bg;
+        if (bg) {
+          root.style.setProperty('--dynamic-bg', `url('${bg}')`);
+        }
+      }
+    });
+  }, { threshold: 0.35, rootMargin: "-20% 0px -20% 0px" });
+
+  sections.forEach(s => observer.observe(s));
+
+  // On resize, reload to ensure correct desktop/mobile behavior
+  let lastIsDesktop = isDesktop;
+  window.addEventListener('resize', () => {
+    const nowDesktop = window.matchMedia('(min-width: 769px)').matches;
+    if (nowDesktop !== lastIsDesktop) {
+      location.reload();
+    }
+  });
+});
+</script>
+
+<script>
+// ============================================
+// SWIPE NAVIGATION DETECTION - ENHANCED
+// ============================================
+
+let touchStartY = 0;
+let touchEndY = 0;
+let touchStartX = 0;
+let touchEndX = 0;
+let isScrolling = false;
+let lastSwipeTime = 0;
+
+function getCurrentSection() {
+  // Find the section that is most visible in the viewport
+  let currentSection = null;
+  let maxVisibility = 0;
+  
+  document.querySelectorAll('section').forEach(section => {
+    const rect = section.getBoundingClientRect();
+    const visibility = Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0);
+    
+    if (visibility > maxVisibility) {
+      maxVisibility = visibility;
+      currentSection = section;
+    }
+  });
+  
+  return currentSection;
+}
+
+function handleSwipe() {
+  const now = Date.now();
+  // Prevent multiple swipes in quick succession
+  if (now - lastSwipeTime < 800) return;
+  
+  const deltaY = touchEndY - touchStartY;
+  const deltaX = Math.abs(touchEndX - touchStartX);
+  const velocity = Math.abs(deltaY) / (Math.abs(touchEndX - touchStartX) || 1);
+  
+  // Lower threshold for swipe detection (30px instead of 50px)
+  // Higher velocity requirement for horizontal swipes to be ignored
+  if (Math.abs(deltaY) > 30 && deltaX < 80 && velocity > 0.5) {
+    const currentSection = getCurrentSection();
+    
+    if (!currentSection) return;
+    
+    if (deltaY < -30) {
+      // Swipe up - go to next section
+      const nextSection = currentSection.nextElementSibling;
+      if (nextSection && nextSection.tagName === 'SECTION') {
+        lastSwipeTime = now;
+        nextSection.classList.add('swipe-up');
+        nextSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setTimeout(() => nextSection.classList.remove('swipe-up'), 600);
+      }
+    } else if (deltaY > 30) {
+      // Swipe down - go to previous section
+      const prevSection = currentSection.previousElementSibling;
+      if (prevSection && prevSection.tagName === 'SECTION') {
+        lastSwipeTime = now;
+        prevSection.classList.add('swipe-down');
+        prevSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        setTimeout(() => prevSection.classList.remove('swipe-down'), 600);
+      }
+    }
+  }
+}
+
+document.addEventListener('touchstart', (e) => {
+  touchStartY = e.changedTouches[0].screenY;
+  touchStartX = e.changedTouches[0].screenX;
+  isScrolling = false;
+}, false);
+
+document.addEventListener('touchmove', (e) => {
+  // Check if user is scrolling within a section
+  const touch = e.changedTouches[0];
+  const deltaY = Math.abs(touch.screenY - touchStartY);
+  const deltaX = Math.abs(touch.screenX - touchStartX);
+  
+  if (deltaY > 10 && deltaX < 10) {
+    isScrolling = true;
+  }
+}, false);
+
+document.addEventListener('touchend', (e) => {
+  if (!isScrolling) {
+    touchEndY = e.changedTouches[0].screenY;
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+  }
+}, false);
+</script>
+</html>
+
+
+<script>
+let currentLanguage = 'en';
+
+function updateLanguage(lang) {
+  currentLanguage = lang;
+  document.querySelectorAll('[data-en], [data-ar]').forEach(el => {
+    const text = el.getAttribute(`data-${lang}`);
+    if (!text) return;
+    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+      el.value = text;
+    } else {
+      el.textContent = text;
+    }
+  });
+
+  document.documentElement.lang = lang;
+  document.body.classList.toggle('rtl', lang === 'ar');
+  document.body.classList.toggle('ltr', lang === 'en');
+
+  const en = document.getElementById('langEn');
+  const ar = document.getElementById('langAr');
+  if (en && ar) {
+    en.classList.toggle('active', lang === 'en');
+    ar.classList.toggle('active', lang === 'ar');
+  }
+
+  localStorage.setItem('nawwacode-language', lang);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem('nawwacode-language');
+  const lang = saved || (navigator.language.startsWith('ar') ? 'ar' : 'en');
+
+  const en = document.getElementById('langEn');
+  const ar = document.getElementById('langAr');
+  if (en) en.onclick = () => updateLanguage('en');
+  if (ar) ar.onclick = () => updateLanguage('ar');
+
+  updateLanguage(lang);
+});
+</script>
+
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const y = document.getElementById('year');
+  if (y) y.textContent = new Date().getFullYear();
+});
+</script>
+
+
+
+
+
+<div id="copyright-text" style="
+  width:100%;
+  text-align:center;
+  padding:24px 12px;
+  font-family:'Cairo', sans-serif;
+  font-size:14px;
+  color:#aaa;
+  background:transparent;
+">
+© 2026 NawwaCode جميع الحقوق محفوظة
+</div>
+
+</body>
